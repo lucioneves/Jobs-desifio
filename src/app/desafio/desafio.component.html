@@ -1,0 +1,57 @@
+<div class="container">
+  <p-table [value]="posts" [paginator]="true" [rows]="10">
+      <ng-template pTemplate="header">
+        <tr class="grid">
+          <th>User ID</th>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Body</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-post>
+        <tr>
+          <td>{{ post.userId }}</td>
+          <td>{{ post.id }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.body }}</td>
+          <td>
+            <p-button pButton type="button" icon="pi pi-eye" class="p-button-warning" (click)="openModalPost(post.id)"></p-button> 
+            <app-comentario-lista 
+              (displayOpenModal)="this.displayOpenModal" 
+              [postId]="this.post.id"
+            />
+
+
+            <p-button pButton type="button" icon="pi pi-pencil" class="p-button-warning" (click)="openEditModal(post)"></p-button>
+            <p-button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="openDeleteConfirmation(post.id)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+</div>   
+
+
+<p-dialog class="modal" header="EditarPost" [(visible)]="displayModal" [modal]="true" [responsive]="true" (onHide)="fecharModal()">
+  <form (ngSubmit)="save()">
+    <div class="form-group">
+      <label for="title">Título</label>
+      <input type="text" class="form-control" id="title" [(ngModel)]="post.title" name="title">
+    </div>
+    <div class="form-group">
+      <label for="body">Corpo</label>
+      <textarea class="form-controle" id="body" [(ngModel)]="post.body" name="body"></textarea>
+    </div>
+    <button type="button" pButton class="btn-secondary" (click)="fecharModal()">Cancelar</button>
+    <button type="submit" pButton class="btn-primary">Salvar</button>
+  </form>
+</p-dialog>
+  
+<p-dialog header="Confirmar exclusão" [(visible)]="displayDeleteModal" [modal]="true" [responsive]="true">
+  <p>Tem certeza que deseja excluir este post?</p>
+  <button pButton type="button" label="SIM" class="p-button-secondary" (click)="confirmDelete()"></button>
+  <button pButton type="button" label="NÂO" class="p-button-primary" (click)="cancelDelete()"></button>
+</p-dialog>
+
+
+

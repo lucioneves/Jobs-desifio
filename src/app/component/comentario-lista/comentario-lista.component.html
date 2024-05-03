@@ -1,0 +1,29 @@
+<p-dialog header="Comentários" [(visible)]="displayOpenModal" [modal]="true" [style]="{width: '50vw'}">
+    
+    <p-table  [value]="comentarios" [paginator]="true" [rows]="10">
+      <ng-template pTemplate="header">
+        <tr class="grid">
+          <th>Post ID</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Body</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-comment>
+        <tr>
+          <td>{{ comment.postId }}</td>
+          <td>{{ comment.id }}</td>
+          <td>{{ comment.name }}</td>
+          <td>{{ comment.email }}</td>
+          <td>{{ comment.body }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  <ng-template *ngIf="comentarios.length === 0" #noComments>
+    <div class="container">
+      <p>Nenhum comentário disponível.</p>
+    </div>
+  </ng-template>
+</p-dialog>
